@@ -1,0 +1,53 @@
+{
+  "name": "full-stack-overflow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/server.js",
+  "scripts": {
+    "dev": "NODE_ENV=dev ts-node-dev ./src/server.ts",
+    "start": "NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED=0 ts-node ./src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fernandollisboa/node-app-template.git"
+  },
+  "author": "fernandollisboa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fernandollisboa/node-app-template/issues"
+  },
+  "homepage": "https://github.com/fernandollisboa/node-app-template#readme",
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.16.4",
+    "@babel/preset-env": "^7.16.4",
+    "babel-jest": "^27.3.1",
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "joi": "^17.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.6",
+    "@types/node": "^16.11.12",
+    "@types/pg": "^8.6.1",
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "faker": "^5.5.3",
+    "husky": "^7.0.4",
+    "jest": "^27.3.1",
+    "prettier": "2.5.0",
+    "supertest": "^6.1.6",
+    "ts-node": "^10.4.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.3"
+  }
+}
