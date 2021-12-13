@@ -15,14 +15,22 @@ export async function insert(question: QuestionDTO, now: Date): Promise<Question
   return query.rows[0];
 }
 
-export async function selectById(id: number): Promise<Question | AnsweredQuestion> {
+export async function selectById(id: number): Promise<Question> {
   const query = await connection.query(
-    `SELECT id,question,student_name AS student,class,tags,"submitAt","answeredAt","answeredBy", answer
+    `SELECT id,question,student_name AS student,class,tags,answered,"submitAt"
      FROM questions 
      WHERE id = $1`,
     [id],
   );
 
+  return query.rows[0];
+}
+
+export async function selectAnswerByQuestionId(question: Question): Promise<AnsweredQuestion> {
+  const query = await connection.query(
+    'SELECT "answeredAt","answeredBy", answer FROM questions WHERE id = $1',
+    [question.id],
+  );
   return query.rows[0];
 }
 

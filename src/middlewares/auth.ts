@@ -26,7 +26,6 @@ export default async function auth(
 
     console.log('verificacao name ', name);
     console.log('jwtResponse ', jwtResponse);
-    // TO-DO testar isso aq em cima
 
     const user = await userRepository.selectByToken(token);
 
@@ -37,7 +36,6 @@ export default async function auth(
     }
 
     req.body.userName = user.name;
-    //TO-DO ver se preciso disso msm
   } catch (err) {
     console.error(err.stack);
     return res.sendStatus(statusCode.UNAUTHORIZED);

@@ -57,3 +57,20 @@ export async function postAnswer(
     next(err);
   }
 }
+
+export async function getQuestion(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<Response> {
+  try {
+    const { id } = req.params;
+    const question = await questionService.getQuestion(Number(id));
+    return res.status(statusCode.OK).send(question);
+  } catch (err) {
+    if (err instanceof QuestionError) {
+      return res.status(err.statusCode).send(err.message);
+    }
+    next(err);
+  }
+}

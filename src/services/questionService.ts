@@ -1,10 +1,10 @@
 import QuestionError from '../errors/QuestionError';
-import AnsweredQuestion from '../protocols/AnsweredQuestion';
 import Question from '../protocols/Question';
 import QuestionDTO from '../protocols/QuestionDTO';
 import * as questionRepository from '../repositories/questionRepository';
 import * as userRepository from '../repositories/userRepository';
 import AnswerDTO from '../protocols/AnswerDTO';
+import AnsweredQuestion from '../protocols/AnsweredQuestion';
 
 export async function createQuestion(question: QuestionDTO): Promise<Question> {
   if (!(await userRepository.selectByName(question.student))) {
@@ -22,10 +22,20 @@ export async function createQuestion(question: QuestionDTO): Promise<Question> {
 export async function createAnswer(answer: AnswerDTO): Promise<AnsweredQuestion> {
   const question = await questionRepository.selectById(answer.questionId);
   if (!question) {
-    throw new QuestionError(`Question with id = ${answer.questionId} does not exists`);
+    throw new QuestionError(
+      `Question with id = ${answer.questionId} does not exists.`,
+      'NOT_FOUND',
+    );
   }
 
-  const now = new Date();
+  if (question.answered) {
+    throw new QuestionError(
+      `Question with id = ${answer.questionId} is already answered.`,
+      'CONFLICT',
+    );
+  }
+
+  const now = new Date(); // TO-DO formatar data
 
   const updatedQuestion: AnsweredQuestion = {
     ...question,
@@ -37,7 +47,22 @@ export async function createAnswer(answer: AnswerDTO): Promise<AnsweredQuestion>
   const answeredQuestion = await questionRepository.insertAnswer(updatedQuestion);
 
   if (!answeredQuestion) {
-    throw new QuestionError('Question Database Error', 'INTERNAL_SERVER_ERROR');
+    throw new QuestionError('Question Database Error.', 'INTERNAL_SERVER_ERROR');
   }
   return answeredQuestion;
+}
+
+export async function getQuestion(questionId: number): Promise<Question | AnsweredQuestion> {
+  const question = await questionRepository.selectById(questionId);
+  if (!question) {
+    throw new QuestionError(`Question with id = ${questionId} does not exists.`, 'NOT_FOUND');
+  }
+
+  if (question.answered) {
+    const answer = await questionRepository.selectAnswerByQuestionId(question);
+    const answeredQuestion = { ...question, ...answer };
+    return answeredQuestion;
+  }
+
+  return question;
 }
