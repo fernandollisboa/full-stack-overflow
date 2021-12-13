@@ -3,8 +3,13 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import statusCode from '../enum/httpStatus';
 import * as userRepository from '../repositories/userRepository';
 import UserError from '../errors/UserError';
+import { Console } from 'console';
 
-async function auth(req: Request, res: Response, next: NextFunction): Promise<Response> {
+export default async function auth(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<Response> {
   const { authorization } = req.headers;
   const token = authorization?.split('Bearer ')[1];
 
@@ -15,6 +20,7 @@ async function auth(req: Request, res: Response, next: NextFunction): Promise<Re
     const { name, classes } = jwt.decode(token, { json: true });
 
     if (jwtResponse instanceof String) {
+      console.log('okddkpa');
       return res.status(statusCode.UNAUTHORIZED).send({ jwtResponse });
     }
 
@@ -26,11 +32,11 @@ async function auth(req: Request, res: Response, next: NextFunction): Promise<Re
 
     console.log('verificacao id ', jwtResponse);
 
-    if (Number(user.name) !== name) {
+    if (user.name !== name) {
       return res.sendStatus(statusCode.UNAUTHORIZED);
     }
 
-    req.body.userId = user.id;
+    req.body.userName = user.name;
     //TO-DO ver se preciso disso msm
   } catch (err) {
     console.error(err.stack);
