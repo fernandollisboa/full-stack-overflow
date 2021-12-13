@@ -17,7 +17,17 @@ export async function postQuestion(
     if (joiValidation.error) {
       throw new QuestionError(joiValidation.error.message);
     }
+
     const newQuestion: QuestionDTO = req.body;
+
+    if (
+      !newQuestion.class.trim() ||
+      !newQuestion.question.trim() ||
+      !newQuestion.student.trim() ||
+      !newQuestion.tags.trim()
+    ) {
+      throw new QuestionError('Please fill all the fields correctly.');
+    }
 
     const createdQuestion = await questionService.createQuestion(newQuestion);
 
@@ -66,7 +76,24 @@ export async function getQuestion(
   try {
     const { id } = req.params;
     const question = await questionService.getQuestion(Number(id));
+    delete question.id;
     return res.status(statusCode.OK).send(question);
+  } catch (err) {
+    if (err instanceof QuestionError) {
+      return res.status(err.statusCode).send(err.message);
+    }
+    next(err);
+  }
+}
+
+export async function getUnansweredQuestions(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<Response> {
+  try {
+    const questions = await questionService.getUnansweredQuestions();
+    return res.status(statusCode.OK).send(questions);
   } catch (err) {
     if (err instanceof QuestionError) {
       return res.status(err.statusCode).send(err.message);

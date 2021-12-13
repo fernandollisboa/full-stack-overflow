@@ -66,3 +66,11 @@ export async function getQuestion(questionId: number): Promise<Question | Answer
 
   return question;
 }
+
+export async function getUnansweredQuestions() {
+  const questions = await questionRepository.selectAllWhereAnsweredIsFalse();
+  if (!questions?.length) {
+    throw new QuestionError('There are no questions unanswered.', 'NOT_FOUND');
+  }
+  return questions;
+}

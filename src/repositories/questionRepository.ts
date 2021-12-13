@@ -34,7 +34,7 @@ export async function selectAnswerByQuestionId(question: Question): Promise<Answ
   return query.rows[0];
 }
 
-export async function selectWhereAnsweredIsFalse(): Promise<Question[]> {
+export async function selectAllWhereAnsweredIsFalse(): Promise<Question[]> {
   const query = await connection.query(`SELECT id,question,student_name AS student,class,"submitAt"
                             FROM questions 
                             WHERE answered IS FALSE;`);

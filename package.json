@@ -9,19 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fernandollisboa/node-app-template.git"
+    "url": "git+https://github.com/fernandollisboa/full-stack-overflow.git"
   },
   "author": "fernandollisboa",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/fernandollisboa/node-app-template/issues"
+    "url": "https://github.com/fernandollisboa/full-stack-overflow/issues"
   },
-  "homepage": "https://github.com/fernandollisboa/node-app-template#readme",
+  "homepage": "https://github.com/fernandollisboa/full-stack-overflow#readme",
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.16.4",
     "@babel/preset-env": "^7.16.4",
     "@types/date-fns": "^2.6.0",
-    "babel-jest": "^27.3.1",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "date-fns": "^2.27.0",

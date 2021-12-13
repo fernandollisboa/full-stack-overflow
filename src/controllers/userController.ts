@@ -14,6 +14,11 @@ export async function postUser(req: Request, res: Response, next: NextFunction):
     }
 
     const newUser: UserDTO = req.body;
+
+    if (!newUser.name.trim() || !newUser.class.trim()) {
+      throw new UserError('Name and/or class can not only contain blank spaces');
+    }
+
     const createdUser = await userService.createUser(newUser);
 
     return res.send(createdUser.token).status(statusCode.CREATED);
