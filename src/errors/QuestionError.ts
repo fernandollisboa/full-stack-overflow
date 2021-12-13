@@ -1,7 +1,7 @@
 import statusCode from '../enum/httpStatus';
 
 class QuestionError extends Error {
-  statusCode: any;
+  statusCode: number;
 
   constructor(message: string, httpStatus?: string) {
     super(message);

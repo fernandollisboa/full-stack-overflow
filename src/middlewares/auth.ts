@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import statusCode from '../enum/httpStatus';
 import * as userRepository from '../repositories/userRepository';
 import UserError from '../errors/UserError';
-import { Console } from 'console';
 
 export default async function auth(
   req: Request,
