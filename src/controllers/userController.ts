@@ -21,7 +21,7 @@ export async function postUser(req: Request, res: Response, next: NextFunction):
 
 		const createdUser = await userService.createUser(newUser);
 
-		return res.send(createdUser.token).status(statusCode.CREATED);
+		return res.send({ token: createdUser.token }).status(statusCode.CREATED);
 	} catch (err) {
 		if (err instanceof UserError) {
 			return res.status(err.statusCode).send(err.message);
